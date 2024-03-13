@@ -1,0 +1,6 @@
+inject:
+  head:
+  - ... 
+  - <link rel="stylesheet" href="/css/{use_css}.css">
+  bottom:
+  - ...
