@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>LeetCode Day 1</title>
+      <link href="/2024/03/04/LeetCode-Day-1/"/>
+      <url>/2024/03/04/LeetCode-Day-1/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="Day-1，数组"><a href="#Day-1，数组" class="headerlink" title="Day 1，数组"></a>Day 1，数组</h3><h4 id="LeetCode704-二分查找"><a href="#LeetCode704-二分查找" class="headerlink" title="LeetCode704. 二分查找"></a>LeetCode704. 二分查找</h4><p><em>题目：<br>给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</em></p><p>思路很简单，取下标中位的值和左右边界对比，然后相应移动边界，最后可得结果。第一次跑TLE了，检查原因是middle的更新写在了while循环外。</p><p>代码：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def search(self, nums, target):</span><br><span class="line">        <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :type target: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">        left = 0</span><br><span class="line">        right = len(nums) - 1</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> left &lt;= right:</span><br><span class="line">            middle = (left + right) / 2</span><br><span class="line">            <span class="keyword">if</span> nums[middle] &lt; target:</span><br><span class="line">                left = middle + 1</span><br><span class="line">            <span class="keyword">elif</span> nums[middle] &gt; target:</span><br><span class="line">                right = middle - 1</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">return</span> middle</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> -1</span><br></pre></td></tr></table></figure><h4 id="LeetCode27-移除元素"><a href="#LeetCode27-移除元素" class="headerlink" title="LeetCode27. 移除元素"></a>LeetCode27. 移除元素</h4><p><em>给你一个数组 nums 和一个值 val，你需要原地移除所有数值等于val的元素，并返回移除后数组的新长度。</em></p><p>做之前看了一个人的思路，一个循环检索target，另一个嵌套循环把后边的数字往前覆盖。我照这个思路做觉得很乱。</p><p>后面学习了另一种思路：只需要一个循环遍历数组，如果当前数字不等于target，就原地覆盖。这个思路更像是跳过target，而不是删除\覆盖它。要点是跳过就不能使用循环的 $i$ 做数组下标，而是要设置一个从0开始的计数器。</p><p>代码：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def removeElement(self, nums, val):</span><br><span class="line">        <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :type val: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">        cnt = 0</span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> n != val:</span><br><span class="line">                nums[cnt] = n</span><br><span class="line">                cnt += 1</span><br><span class="line">            </span><br><span class="line">        <span class="built_in">return</span> cnt</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>这个转换思路挺好的，我没有想到。</p><h4 id="LeetCode35-搜索插入位置"><a href="#LeetCode35-搜索插入位置" class="headerlink" title="LeetCode35. 搜索插入位置"></a>LeetCode35. 搜索插入位置</h4><p>看到复杂度要求是$nlogn$就能想到用二分，是704的变型。用之前的代码可以通过数字存在的情况。这题的关键点是数字不在数组中的情况，我认为根据middle最后的值可以计算出答案。</p><p>测试中一直TLE。回头检查代码发现是凭记忆写的704代码错漏百出…</p><p>思路大致对的，但是要返回 right+1 ，而不是 middle+1。</p><p>代码：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def searchInsert(self, nums, target):</span><br><span class="line">        <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :type target: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">        left = 0</span><br><span class="line">        right = len(nums) - 1</span><br><span class="line">        middle = 0</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> left &lt;= right:</span><br><span class="line">            middle = (left + right) / 2</span><br><span class="line">            <span class="keyword">if</span> nums[middle] &lt; target:</span><br><span class="line">                left = middle + 1</span><br><span class="line">            <span class="keyword">elif</span> nums[middle] &gt; target:</span><br><span class="line">                right = middle - 1</span><br><span class="line">            <span class="keyword">elif</span> nums[middle] == target:</span><br><span class="line">                <span class="built_in">return</span> middle</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">return</span> right + 1</span><br></pre></td></tr></table></figure><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>感觉有几个东西需要改进。第一个是二分法的开闭区间，我今天用的是左闭右闭。但听说左闭右开会好一点，打算以后按这个来。第二个是今天明显写的有点随意了，比如35就太想当然，想凭记忆来写代码。</p><p><strong>还需要一点耐心。</strong></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 刷题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>测试</title>
+      <link href="/2023/12/05/%E6%B5%8B%E8%AF%95/"/>
+      <url>/2023/12/05/%E6%B5%8B%E8%AF%95/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="这是一个测试"><a href="#这是一个测试" class="headerlink" title="这是一个测试"></a>这是一个测试</h4>]]></content>
+      
+      
+      <categories>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
